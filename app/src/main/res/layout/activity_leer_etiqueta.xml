@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.edu.udea.vista.ActivityLeerTarjeta"
+    android:background="#C5E1A5"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/ivInicio"
+        android:layout_width="330dp"
+        android:layout_height="330dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/tagnfc"/>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="20dp" />
+
+    <Button
+        android:id="@+id/btnLeerArticulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="  LEER TAG ARTICULO  "
+        android:textStyle="bold"
+        android:textColor="#EEEEEE"
+        android:background="@drawable/boton_normal"/>
+
+</LinearLayout>
