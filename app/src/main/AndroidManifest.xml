@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.edu.udea.vista" >
 
+    <!--Permiso para utilizar NFC -->
+    <uses-permission android:name="android.permission.NFC"/>
+
+    <!-- Declaramos como obligatorio la presencia de tecnología NFC en el dispositivo para operar la
+       Aplicación. En el Google Play solo se va a mostrar la App para dispositivos con hardware NFC-->
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -15,6 +22,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+            <!-- Cuando un tag se acerca al dispositivo (es decir, se realiza un Intento)
+                el dispositivo abre la App si no está abierta.
+                Si existen otras Apps que tengan esta misma opción, al realizar un intento,
+                el SO va a mostrar un mensaje con las Apps para elegir la que desea abrir.
+             -->
+            <!--
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            -->
+
         </activity>
         <activity
             android:name="co.edu.udea.vista.ActivityLeerTarjeta"

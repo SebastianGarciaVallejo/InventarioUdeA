@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+
 public class MainActivity extends Activity implements View.OnClickListener{
 
     private EditText editTextUsuario;
@@ -60,12 +61,35 @@ public class MainActivity extends Activity implements View.OnClickListener{
             Toast.makeText(MainActivity.this, "Se toco boton ingresar", Toast.LENGTH_LONG).show();
             String usuario = editTextUsuario.getText().toString();
             String contrasena = editTextContrasena.getText().toString();
-            Intent leerTarjeta = new Intent(this, ActivityLeerTarjeta.class );
-            startActivity(leerTarjeta);
+            boolean usuarioLogueado = validarUsuario(usuario,contrasena );
+
+            if(usuarioLogueado)
+            {
+                Intent leerTarjeta = new Intent(this, ActivityLeerTarjeta.class );
+                startActivity(leerTarjeta);
+            }
+            else
+            {
+                Toast.makeText(MainActivity.this, "Usuario o contraseña incorrecto", Toast.LENGTH_LONG).show();
+                return;
+            }
             /*Intent i = new Intent(this, Actividad2.class);
             i.putExtra("direccion", et1.getText().toString());
             startActivity(i);
              Bundle bundle=getIntent().getExtras();*/
         }
+    }
+
+    public boolean validarUsuario(String usuario, String contrasena)
+    {;
+        // Se consume el servicio para validar que existan
+        String usarioBd = "1128";
+        String contrasenaBd = "udea";
+
+        if(usuario.equals(usarioBd) && contrasena.equals(contrasenaBd))
+        {
+            return true;
+        }
+        return false;
     }
 }
