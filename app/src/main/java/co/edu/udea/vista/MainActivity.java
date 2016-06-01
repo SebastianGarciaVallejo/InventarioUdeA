@@ -8,7 +8,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +34,6 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import co.edu.udea.modelo.login.Laboratorio;
 import co.edu.udea.modelo.login.Respuesta;
 
 
@@ -180,15 +178,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
                 esAdministrador = true;
                 Gson gson = new Gson();
                 respuesta = gson.fromJson(respuestaServicio, Respuesta.class);
-
-                for (Laboratorio labo : respuesta.getData().getListaLaboratorios()) {
-                    Log.w("Salida", "id: " + labo.getId());
-                    Log.w("Salida", "nombre: " + labo.getNombre());
-                    Log.w("Salida", "Ubicacion: " + labo.getUbicacion());
-                    Log.w("Salida", "numeroTelefonico: " + labo.getNumeroTelefonico());
-                    Log.w("Salida", "FechaCreacion: " + labo.getFechaCreacion());
-                    Log.w("Salida", "FechaActualizacion: " + labo.getFechaActualizacion());
-                }
             } catch (MalformedURLException e)
             {
                 mensajaError = "URL del servicio de login invalida";
