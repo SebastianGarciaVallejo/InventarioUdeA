@@ -41,9 +41,6 @@
                 android:id="@+id/etUsuario"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:hint="N°identificacion"
-                android:inputType="number"
-                android:digits="1234567890"
                 android:singleLine="true"
                 android:maxWidth="150dp"/>
         </TableRow>
