@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
+import co.edu.udea.modelo.login.IntermediarioActividades;
 import co.edu.udea.modelo.login.Respuesta;
 
 
@@ -208,7 +209,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             if(esAdministrador)
             {
                 Intent intent = new Intent(context, ActivityLeerTarjeta.class);
-                //intent.putExtra("DatosRespuesta", respuesta);
+                IntermediarioActividades.setObjetoATransmitirEntreActividades(respuesta);
                 context.startActivity(intent);
                 ((Activity)context).finish();
             }

@@ -15,12 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class ActivityLeerTarjeta extends Activity implements View.OnClickListener {
 
@@ -28,7 +26,6 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
     private TextView salida;
     private NfcAdapter mNfcAdapter;
     private PendingIntent nfcPendingIntent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +39,12 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
         if (mNfcAdapter == null)
         {
             Toast.makeText(this, "Este dispositivo no soporta NFC.", Toast.LENGTH_LONG).show();
-            finish();
             return;
         }
 
         if (!mNfcAdapter.isEnabled())
         {
-            btnLeerTarjeta.setText("NFC deshabilita");
+            btnLeerTarjeta.setText("NFC deshabilitado");
         }
         else
         {
@@ -127,7 +123,7 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
     }
 
     public String leerTag(Tag tag, int sector){
-        //Tipo de tecnología de Tag que vamos a leer)
+        //Tipo de tecnología de Tag que vamos a leer
         MifareClassic mifare = MifareClassic.get(tag);
 
         try {
