@@ -208,7 +208,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
             super.onPostExecute(resultado);
             if(esAdministrador)
             {
-                Intent intent = new Intent(context, ActivityLeerTarjeta.class);
+                Intent intent = new Intent(context, ActivityOpciones.class);
                 IntermediarioActividades.setObjetoATransmitirEntreActividades(respuesta);
                 context.startActivity(intent);
                 ((Activity)context).finish();
