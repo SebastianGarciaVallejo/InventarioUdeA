@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.udea.vista.ActivityLeerTarjeta"
-    android:background="#C5E1A5">
+    tools:context="co.edu.udea.vista.ActivityLeerTarjeta">
 
     <ImageView
         android:id="@+id/ivInicio"
