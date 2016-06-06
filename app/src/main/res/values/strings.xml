@@ -6,11 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_activity_leer_articulo">LeerArticulo</string>
     <string name="title_activity_activity_leer_etiqueta">LeerEtiqueta</string>
-    <string name="etiqueta_contrasena">Contraseña</string>
-    <string name="etiqueta_ubica_usuario">Ubicación del usuario</string>
-    <string name="etiqueta_info_usuario">Información del usuario</string>
-    <string name="texto_cambiar_contrasena">Cambia tu contraseña</string>
     <string name="title_activity_activity_opciones">Opciones Administrador</string>
-
 
 </resources>

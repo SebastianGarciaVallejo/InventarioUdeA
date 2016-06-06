@@ -83,8 +83,6 @@ public class ActivityOpciones extends Activity implements View.OnClickListener{
         }
         else if(view.getId() == miInformacionBtn.getId())
         {
-            Intent i = new Intent(this, ActivityPerfil.class );
-            startActivity(i);
 
         }
     }
