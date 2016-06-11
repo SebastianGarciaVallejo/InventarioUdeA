@@ -34,7 +34,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import co.edu.udea.modelo.login.IntermediarioActividades;
+import co.edu.udea.modelo.utiles.IntermediarioActividades;
 import co.edu.udea.modelo.login.Respuesta;
 
 

@@ -41,7 +41,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="32dp"
                 android:textSize="18sp"
-                android:text="Administrator"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <ImageView
@@ -59,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
-                android:text="admin@mail.com"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </GridLayout>
@@ -97,7 +95,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
-            android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
@@ -115,7 +112,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
-            android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <ImageView
@@ -133,13 +129,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
-            android:text=""
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </GridLayout>
-
-
-
-
 
     <TextView
         android:id="@+id/titulo_contrasena"
@@ -152,8 +143,6 @@
         android:textStyle="bold"
         android:text="@string/etiqueta_contrasena"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
 
         <RelativeLayout
             android:layout_width="wrap_content"

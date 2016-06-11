@@ -1,4 +1,4 @@
-package co.edu.udea.modelo.login;
+package co.edu.udea.modelo.utiles;
 
 
 import java.io.Serializable;

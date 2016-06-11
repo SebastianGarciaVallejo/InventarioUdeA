@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
-import co.edu.udea.modelo.login.IntermediarioActividades;
+import co.edu.udea.modelo.utiles.IntermediarioActividades;
 import co.edu.udea.modelo.login.Respuesta;
 
 public class ActivityOpciones extends Activity implements View.OnClickListener{
@@ -70,8 +70,8 @@ public class ActivityOpciones extends Activity implements View.OnClickListener{
 
         if(view.getId() == realizarPrestamoBtn.getId())
         {
-            Intent i = new Intent(this, ActivityLeerTarjeta.class );
-            startActivity(i);
+            Intent intent = new Intent(this, ActivityLeerTarjeta.class );
+            startActivity(intent);
         }
         else if(view.getId() == registrarDevolucionBtn.getId())
         {
@@ -83,9 +83,13 @@ public class ActivityOpciones extends Activity implements View.OnClickListener{
         }
         else if(view.getId() == miInformacionBtn.getId())
         {
-            Intent i = new Intent(this, ActivityPerfil.class );
-            startActivity(i);
-
+            Intent intent = new Intent(this, ActivityPerfil.class );
+            intent.putExtra("idUsuario", respuesta.getData().getId());
+            intent.putExtra("token", respuesta.getData().getToken());
+            intent.putExtra("nombreLaboratorio", respuesta.getData().getListaLaboratorios().get(0).getNombre());
+            intent.putExtra("telefono", respuesta.getData().getListaLaboratorios().get(0).getNumeroTelefonico());
+            intent.putExtra("ubicacion", respuesta.getData().getListaLaboratorios().get(0).getUbicacion());
+            startActivity(intent);
         }
     }
 }
