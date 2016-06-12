@@ -32,11 +32,6 @@ import java.net.URL;
 
 import co.edu.udea.modelo.informacionBasica.Respuesta;
 
-//import java.io.InputStream;
-
-//import java.io.BufferedWriter;
-
-//import java.net.SocketTimeoutException;
 
 public class ActivityPerfil extends Activity implements View.OnClickListener {
 
@@ -60,7 +55,7 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mi_perfil);
         iniciarComponentes();
-        InformacionAdministrador informacionAdministrador = new InformacionAdministrador();
+        InformacionAdministrador informacionAdministrador = new InformacionAdministrador(this);
         informacionAdministrador.execute();
     }
 
@@ -71,10 +66,11 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
         TvUbicacion = (TextView)findViewById(R.id.texto_ubicacion);
         TvNombre = (TextView) findViewById(R.id.texto_nombre);
         TvEmail = (TextView) findViewById(R.id.texto_email);
-        EdContrasenaActual = (EditText)findViewById(R.id.etContrasena);
+        EdContrasenaActual = (EditText)findViewById(R.id.etContrasenaActual);
         EdContrasenaNueva = (EditText)findViewById(R.id.etContrasenaNueva);
         EdContrasenaConfirmar = (EditText)findViewById(R.id.etContrasenaConfirmar);
         btnAceptar = (Button)findViewById(R.id.btnAceptar);
+        btnAceptar.setOnClickListener(this);
         Bundle bundle = getIntent().getExtras();
         token = bundle.getString("token");
         idUsuario = bundle.getString("idUsuario");
@@ -85,6 +81,7 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
         if (view.getId() == btnAceptar.getId())
         {
             String contrasenaNueva = EdContrasenaNueva.getText().toString();
@@ -93,36 +90,48 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
 
             if("".equals(contrasenaActual))
             {
-                mostrarMensajeError("Por favor ingrese su contraseña actual");
+                mostrarMensaje("Por favor ingrese su contraseña actual.", this);
                 return;
             }
             if("".equals(contrasenaNueva))
             {
-                mostrarMensajeError("Por favor ingrese su nueva contraseña");
+                mostrarMensaje("Por favor ingrese su nueva contraseña.", this);
                 return;
             }
             if("".equals(contrasenaConfimar))
             {
-                mostrarMensajeError("Por favor confirme su nueva contraseña");
+                mostrarMensaje("Por favor confirme su nueva contraseña.", this);
                 return;
             }
-            if(!contrasenaActual.equals(contrasenaNueva))
+            if(contrasenaActual.equals(contrasenaNueva))
             {
-                mostrarMensajeError("Error: la confirmación es incorrecta");
+                mostrarMensaje("La nueva contraseña no puede ser igual a la actual.", this);
+                return;
             }
+            if(!contrasenaNueva.equals(contrasenaConfimar))
+            {
+                mostrarMensaje("Error: la confirmación es incorrecta", this);
+                return;
+            }
+            RegistrarCambioContrasena registrarCambioContrasena = new RegistrarCambioContrasena(this);
+            registrarCambioContrasena.execute(contrasenaActual, contrasenaNueva);
         }
     }
 
-    public void mostrarMensajeError(String mensaje)
+    public void mostrarMensaje(String mensaje, Context context)
     {
-        Toast.makeText(this, mensaje , Toast.LENGTH_LONG).show();
+        Toast.makeText(context, mensaje , Toast.LENGTH_LONG).show();
     }
-
 
     private class InformacionAdministrador extends AsyncTask<String, String, Void> {
 
         private String  mensajaError = "";
         Respuesta respuesta;
+        Context context;
+
+        public InformacionAdministrador(Context context) {
+            this.context = context;
+        }
 
         @Override
         protected Void doInBackground(String... params) {
@@ -182,8 +191,7 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
             }
             else
             {
-                Toast.makeText(ActivityPerfil.this, mensajaError, Toast.LENGTH_LONG).show();
-                return;
+                mostrarMensaje(mensajaError,context);
             }
         }
 
@@ -203,7 +211,6 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
     private class RegistrarCambioContrasena extends AsyncTask<String, String, Void> {
 
         private String  mensajaError = "";
-        co.edu.udea.modelo.CambioContrasena.Respuesta respuesta;
         Context context;
 
         public RegistrarCambioContrasena(Context context) {
@@ -212,7 +219,7 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
         @Override
         protected Void doInBackground(String... params) {
 
-            String contrasenaVieja = params[0];
+            String contrasenaActual = params[0];
             String contaseñaNueva = params[1];
             String urlServicio = "http://udea.dnetix.co/api/password/change?token=" + token;
             URL url = null;
@@ -226,7 +233,7 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
                 Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("old_password", contrasenaVieja)
+                        .appendQueryParameter("old_password", contrasenaActual)
                         .appendQueryParameter("new_password", contaseñaNueva);
 
                 String query = builder.build().getEncodedQuery();
@@ -244,11 +251,8 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
                 boolean statusOK = respJSON.getBoolean("status");
                 if(!statusOK)
                 {
-                    mensajaError = "Contraseña incorrecta";
-                    return null;
+                    mensajaError = respJSON.getString("error");
                 }
-                Gson gson = new Gson();
-                respuesta = gson.fromJson(respuestaServicio, co.edu.udea.modelo.CambioContrasena.Respuesta.class);
             } catch (MalformedURLException e)
             {
                 mensajaError = "URL del servicio de invalida";
@@ -276,6 +280,17 @@ public class ActivityPerfil extends Activity implements View.OnClickListener {
         @Override
         protected void onPostExecute(Void resultado) {
             super.onPostExecute(resultado);
+            if(!"".equals(mensajaError))
+            {
+                mostrarMensaje(mensajaError,context);
+            }
+            else
+            {
+                mostrarMensaje("Contraseña actualizada correctamente.",context);
+                EdContrasenaNueva.setText("");
+                EdContrasenaActual.setText("");
+                EdContrasenaConfirmar.setText("");
+            }
         }
 
         public String leerInformacionServicio(InputStream stream) throws IOException
