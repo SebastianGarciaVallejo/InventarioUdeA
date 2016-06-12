@@ -34,9 +34,8 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import co.edu.udea.modelo.utiles.IntermediarioActividades;
 import co.edu.udea.modelo.login.Respuesta;
-
+import co.edu.udea.modelo.utiles.IntermediarioActividades;
 
 public class MainActivity extends Activity implements View.OnClickListener{
 

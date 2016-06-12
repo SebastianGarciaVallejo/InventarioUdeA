@@ -144,40 +144,80 @@
         android:text="@string/etiqueta_contrasena"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <RelativeLayout
+    <GridLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:padding="10dip"
+        android:rowCount="3">
+
+        <TextView
+            android:text="ACTUAL:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="3dip">
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"/>
 
-            <ImageView
-                android:id="@+id/icono_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dip"
-                android:src="@drawable/contrasena" />
+        <EditText
+            android:id="@+id/etContrasenaActual"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:password="true"
+            android:inputType="textPassword"
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:maxWidth="150dp"/>
 
-            <TextView
-                android:id="@+id/texto_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:textSize="18sp"
-                android:layout_toRightOf="@+id/icono_password"
-                android:text="@string/texto_cambiar_contrasena"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:text="NUEVA:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"/>
 
-            <ImageView
-                android:id="@+id/icono_indicador_derecho"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/indicador_derecho" />
+        <EditText
+            android:id="@+id/etContrasenaNueva"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:password="true"
+            android:inputType="textPassword"
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:maxWidth="150dp"/>
 
-        </RelativeLayout>
+        <TextView
+            android:text="CONFIRMAR:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"/>
+
+        <EditText
+            android:id="@+id/etContrasenaConfirmar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:password="true"
+            android:inputType="textPassword"
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:maxWidth="150dp"/>
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/btnAceptar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="   ACEPTAR   "
+        android:textStyle="bold"
+        android:textColor="#EEEEEE"
+        android:background="@drawable/boton_normal_verde"/>
 
 </LinearLayout>
