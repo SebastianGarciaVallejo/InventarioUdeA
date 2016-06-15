@@ -57,6 +57,10 @@
             android:name="co.edu.udea.vista.ActivityOpciones"
             android:label="@string/title_activity_activity_opciones" >
         </activity>
+        <activity
+            android:name="co.edu.udea.vista.ActivityLista"
+            android:label="@string/title_activity_activity_lista" >
+        </activity>
     </application>
 
 </manifest>
