@@ -63,7 +63,8 @@ public class ActivityOpciones extends Activity implements View.OnClickListener{
 
         if(view.getId() == realizarPrestamoBtn.getId())
         {
-            Intent intent = new Intent(this, ActivityLeerTarjeta.class );
+            Intent intent = new Intent(this, ActivityLeerTarjeta.class);
+            intent.putExtra("token", respuesta.getData().getToken());
             startActivity(intent);
         }
         else if(view.getId() == registrarDevolucionBtn.getId())

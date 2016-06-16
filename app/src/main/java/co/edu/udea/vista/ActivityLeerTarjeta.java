@@ -11,29 +11,30 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ActivityLeerTarjeta extends Activity implements View.OnClickListener {
+import co.edu.udea.modelo.login.Laboratorio;
+import co.edu.udea.modelo.login.Respuesta;
+import co.edu.udea.modelo.utiles.IntermediarioActividades;
+
+public class ActivityLeerTarjeta extends Activity  {
 
     private Button btnLeerTarjeta;
-    private TextView salida;
     private NfcAdapter mNfcAdapter;
     private PendingIntent nfcPendingIntent;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tarjeta);
         btnLeerTarjeta = (Button)findViewById(R.id.btnLeerTarjeta);
-        salida = (TextView)findViewById(R.id.salida);
-        btnLeerTarjeta.setOnClickListener(this);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         if (mNfcAdapter == null)
@@ -45,10 +46,6 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
         if (!mNfcAdapter.isEnabled())
         {
             btnLeerTarjeta.setText("NFC deshabilitado");
-        }
-        else
-        {
-            btnLeerTarjeta.setText("NFC Habilitado");
         }
         /* Se crea un PendingIntent (Intento pendiente) que será asociado a esta actividad
         * Cuando se detecte un intento, asignará los detalles del tag detectado y se lo asigna
@@ -76,16 +73,6 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
     }
 
     @Override
-    public void onClick(View view)
-    {
-        if (view.getId() == btnLeerTarjeta.getId())
-        {
-            Intent leerEtiqueta = new Intent(this, ActivityLeerEtiqueta.class );
-            startActivity(leerEtiqueta);
-        }
-    }
-
-    @Override
     public void onResume()
     {
         super.onResume();
@@ -106,19 +93,55 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
     @Override
     public void onNewIntent(Intent intent)
     {
-
         setIntent(intent);
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction()))
+        {
             // Se obtiene el Tag del intento detectado.
             Tag tagDeIntento = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            //String nombreCompleto = leerTag(tagDeIntento,17);
+            String auxiliarCedula = leerTag(tagDeIntento,18);
 
-            String nombreCompleto = leerTag(tagDeIntento,17);
-            String cedula = leerTag(tagDeIntento,18);
 
-            if(nombreCompleto != null && cedula != null)
+            if(auxiliarCedula != null)
             {
-                salida.setText(nombreCompleto + " " + cedula);
+                String cedula = "";
+                for (short indice = 0; indice < auxiliarCedula.length(); indice++)
+                {
+                    char caracter = auxiliarCedula.charAt(indice);
+                    if (esNumerico(caracter))
+                    {
+                        cedula += caracter;
+                    }
+                }
+                Respuesta respuesta =  (Respuesta) IntermediarioActividades.getObjetoATransmitirEntreActividades();
+                int tamanoArregloLaboratorio = respuesta.getData().getListaLaboratorios().size();
+                int indice = 0;
+                String laboratorios[] = new String[tamanoArregloLaboratorio];
+                String idLaboratorios[] = new String[tamanoArregloLaboratorio];
+
+                for (Laboratorio labo : respuesta.getData().getListaLaboratorios()) {
+                    laboratorios[indice] = labo.getNombre();
+                    idLaboratorios[indice] = labo.getId();
+                    indice++;
+                }
+                Bundle bundle = getIntent().getExtras();
+                token = bundle.getString("token");
+                Intent intentTag = new Intent(this, ActivityLeerEtiqueta.class);
+                intentTag.putExtra("token", token);
+                intentTag.putExtra("cedula", cedula);
+                intentTag.putExtra("laboratorios", laboratorios);
+                intentTag.putExtra("idLaboratorios", idLaboratorios);
+                startActivity(intentTag);
             }
+        }
+    }
+
+    private static boolean esNumerico(char caracter){
+        try {
+            Integer.parseInt(String.valueOf(caracter));
+            return true;
+        } catch (NumberFormatException ex){
+            return false;
         }
     }
 
@@ -136,9 +159,7 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
                 Toast.makeText(this, "El tag NFC que se intenta leer no es una TIP", Toast.LENGTH_LONG).show();
                 return null;
             }
-
             byte[] tipoClaveAcceso = tipoDeClaveDeAccesoPorDefecto(mifare, sector);
-
             String informacionLeida = "";
             int indiceBloque = 0;
             boolean sectorHabilitado = mifare.authenticateSectorWithKeyA(sector, tipoClaveAcceso);
@@ -161,7 +182,7 @@ public class ActivityLeerTarjeta extends Activity implements View.OnClickListene
                 Toast.makeText(this, "No se tienen los permisos necesarios para leer la informacion.", Toast.LENGTH_LONG).show();
                 return null;
             }
-            return removeAccents(informacionLeida);//Normalizer.normalize(informacionLeida, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+            return removeAccents(informacionLeida);
         }
         catch (IOException e)
         {

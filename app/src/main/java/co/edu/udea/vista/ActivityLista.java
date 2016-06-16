@@ -49,7 +49,7 @@ public class ActivityLista extends Activity {
     public void iniciarComponentes()
     {
         Bundle bundle = getIntent().getExtras();
-        token = bundle.getString("token");;
+        token = bundle.getString("token");
     }
 
     private class ListarArtículos extends AsyncTask<String, String, Void> {

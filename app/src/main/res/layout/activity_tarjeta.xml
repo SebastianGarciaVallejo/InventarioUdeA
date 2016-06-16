@@ -19,18 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="LEER TARJETA DE IDENTIFICACION"
-        android:textStyle="bold"
-        android:textColor="#EEEEEE"
-        android:background="@drawable/boton_normal"/>
-
-    <TextView
-        android:id="@+id/salida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:paddingEnd="10dp"
-        android:paddingRight="10dp"/>
+        android:text="POR FAVOR ACERQUE LA TIP DEL ESTUDIANTE AL DISPOSITIVO MOVIL"
+        android:textStyle="bold" />
 
 </LinearLayout>
